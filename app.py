@@ -24,5 +24,5 @@ with st.form(key='my_form'):
     submit_button = st.form_submit_button(label='Submit')
 
 if submit_button:
-    entities = extracts_entities
+    entities = extracts_entities(nlp,text_input)
     st.dataframe(entities)
