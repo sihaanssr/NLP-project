@@ -23,18 +23,18 @@ with st.form(key='my_form'):
         'Enter the job description to extract entities', DEFAULT_TEXT)
     submit_button = st.form_submit_button(label='Submit')
 
+entities, doc = extracts_entities(nlp, text_input)
 if submit_button:
-    entities, doc = extracts_entities(nlp, text_input)
     st.dataframe(entities)
 
 
-with st.form(key='my_form'):
+with st.form(key='new_form'):
     threshold = st.slider(label="Choose a threshold for the model",
-                          min_value=0.5, max_value=1.0, step=0.01)
+                        min_value=0.5, max_value=1.0, step=0.01)
     chosen_relation = st.selectbox("Choose the relation you want to explore", [
-                                   "EXPERIENCE_IN", "DEGREE_IN"])
+        "EXPERIENCE_IN", "DEGREE_IN"])
     rel_submit_button = st.form_submit_button(label='Explore the relation')
 
 if rel_submit_button:
-    df = classify_relations(st, relations, doc, chosen_relation, threshold)
+    df = classify_relations(relations, doc, chosen_relation, threshold)
     st.dataframe(df)
