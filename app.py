@@ -30,7 +30,7 @@ if submit_button:
 
 with st.form(key='new_form'):
     threshold = st.slider(label="Choose a threshold for the model",
-                        min_value=0.5, max_value=1.0, step=0.01)
+                          min_value=0.5, max_value=1.0, step=0.01)
     chosen_relation = st.selectbox("Choose the relation you want to explore", [
         "EXPERIENCE_IN", "DEGREE_IN"])
     rel_submit_button = st.form_submit_button(label='Explore the relation')
