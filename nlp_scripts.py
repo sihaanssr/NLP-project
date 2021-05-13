@@ -1,4 +1,8 @@
 import spacy
+from spacy.tokens import DocBin, Doc
+from spacy.training.example import Example
+from rel_pipe import make_relation_extractor, score_relations
+from rel_model import create_relation_model, create_classification_layer, create_instances, create_tensors
 from pandas import DataFrame
 # import streamlit as st
 
@@ -47,7 +51,8 @@ def classify_relations(st, relation_model, doc, chosen_relation, threshold):
                         if rel_dict[chosen_relation] >= threshold:
                             # print(
                             #     f" entities: {e.text, b.text} --> predicted relation: {rel_dict}")
-                            relations.append([e.text,b.text,rel_dict.values()])
-    df = DataFrame(relations,columns=["First Entity, Second Entity, Conf. DEGREE_IN, Conf. EXPERIENCE_IN"])
+                            relations.append(
+                                [e.text, b.text, rel_dict.values()])
+    df = DataFrame(relations, columns=[
+                   "First Entity, Second Entity, Conf. DEGREE_IN, Conf. EXPERIENCE_IN"])
     return df
-                            
