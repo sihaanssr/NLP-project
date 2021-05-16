@@ -1,4 +1,5 @@
 import spacy
+from emoji import demojize
 from re import sub
 import streamlit as st
 from defaults import DEFAULT_TEXT
@@ -10,7 +11,13 @@ from nlp_scripts import initialize_entity_model, initialize_relations_model, ext
 
 nlp = spacy.load('en_core_web_sm')
 
+def emoji_to_text(line):
+    line = demojize(line)
+    return line
+
+
 def preprocess(text_input):
+    sentence = emoji_to_text(text_input)
     sentence = nlp(sentence)
     
     sentence = [word for word in sentence if not word.is_punct]
