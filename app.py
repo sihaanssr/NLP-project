@@ -1,3 +1,4 @@
+import spacy
 from re import sub
 import streamlit as st
 from defaults import DEFAULT_TEXT
@@ -6,6 +7,20 @@ from nlp_scripts import initialize_entity_model, initialize_relations_model, ext
 # status_text = st.empty()
 # status_text.text()
 # status_text.text("Loading NER model done")
+
+nlp = spacy.load('en_core_web_sm')
+
+def preprocess(text_input):
+    sentence = nlp(sentence)
+    
+    sentence = [word for word in sentence if not word.is_punct]
+    sentence = [word for word in sentence if len(word)>3]
+    sentence = [word for word in sentence if not word.is_stop]
+    sentence = [word for word in sentence if not word.like_url]
+    sentence = [word.lemma_ for word in sentence]
+    
+    return " ".join(sentence)
+
 
 with st.spinner("Loading Entity Recognition Model..."):
     nlp = initialize_entity_model()
@@ -22,6 +37,8 @@ with st.form(key='my_form'):
     text_input = st.text_area(
         'Enter the job description to extract entities', DEFAULT_TEXT)
     submit_button = st.form_submit_button(label='Submit')
+
+text_input = preprocess(text_input)
 
 entities, doc = extracts_entities(nlp, text_input)
 if submit_button:
