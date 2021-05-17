@@ -1,4 +1,4 @@
-import spacy
+# import spacy
 # from emoji import demojize
 from re import sub
 import streamlit as st
@@ -9,24 +9,24 @@ from nlp_scripts import initialize_entity_model, initialize_relations_model, ext
 # status_text.text()
 # status_text.text("Loading NER model done")
 
-nlp = spacy.load('en_core_web_sm')
+# nlp = spacy.load('en_core_web_sm')
 
 # def emoji_to_text(line):
 #     line = demojize(line)
 #     return line
 
 
-def preprocess(text_input):
-    # sentence = emoji_to_text(text_input)
-    sentence = nlp(text_input)
+# def preprocess(text_input):
+#     # sentence = emoji_to_text(text_input)
+#     sentence = nlp(text_input)
     
-    sentence = [word for word in sentence if not word.is_punct]
-    sentence = [word for word in sentence if len(word)>3]
-    sentence = [word for word in sentence if not word.is_stop]
-    sentence = [word for word in sentence if not word.like_url]
-    sentence = [word.lemma_ for word in sentence]
+#     sentence = [word for word in sentence if not word.is_punct]
+#     sentence = [word for word in sentence if len(word)>3]
+#     sentence = [word for word in sentence if not word.is_stop]
+#     sentence = [word for word in sentence if not word.like_url]
+#     sentence = [word.lemma_ for word in sentence]
     
-    return " ".join(sentence)
+#     return " ".join(sentence)
 
 
 with st.spinner("Loading Entity Recognition Model..."):
@@ -45,7 +45,7 @@ with st.form(key='my_form'):
         'Enter the job description to extract entities', DEFAULT_TEXT)
     submit_button = st.form_submit_button(label='Submit')
 
-text_input = preprocess(text_input)
+# text_input = preprocess(text_input)
 
 entities, doc = extracts_entities(nlp, text_input)
 if submit_button:
